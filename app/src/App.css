@@ -7,6 +7,13 @@ body {
 .App {
   width: 100vw;
   height: 100vh;
+  /* iOS Safari (and WebKit-based Chrome/Brave on iOS) sizes 100vh against
+     the largest viewport with browser chrome collapsed, not what's
+     actually visible - so bottom-anchored absolute children (capture
+     button, gallery, stats) end up pushed under the toolbar. 100dvh
+     tracks the real visible viewport; unsupported browsers ignore this
+     line and keep the 100vh above. */
+  height: 100dvh;
   position: relative;
   background: #000;
   overflow: hidden;
@@ -27,6 +34,7 @@ body {
   background-color: #000;
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* see .App - keeps canvas matched to .App's real height */
   position: absolute;
   top: 0px;
   left: 0px;
