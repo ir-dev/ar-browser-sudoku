@@ -204,10 +204,7 @@ function App() {
         <StatusBadge status={status} />
       </div>
 
-      <CaptureButton
-        visible={!!processor.solvedPuzzle}
-        onCapture={handleManualCapture}
-      />
+      <CaptureButton onCapture={handleManualCapture} />
 
       <CaptureGallery
         captures={captures}

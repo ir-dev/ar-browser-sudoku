@@ -1,18 +1,14 @@
 import React from "react";
 
 export default function CaptureButton({
-  visible,
   onCapture,
 }: {
-  visible: boolean;
   onCapture: () => void;
 }) {
-  // Fully unmount rather than just hide - avoids a dead hit-target sitting
-  // over the canvas when there's nothing to capture.
-  if (!visible) {
-    return null;
-  }
-
+  // Always mounted and always fully active - the user taps it as many
+  // times as they want, whenever they want, rather than it only appearing
+  // once a puzzle is solved. Repeated taps are how multiple captures (e.g.
+  // across different solutions) get collected.
   return (
     <button
       className="capture-button"
