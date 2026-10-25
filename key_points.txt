@@ -1,0 +1,5 @@
+
+
+deloyed to https://sudoku-grabber.immanuel.co/
+
+after successful build /app/build - folder is hosted on the server.

@@ -2,6 +2,19 @@ import * as tf from "@tensorflow/tfjs";
 import { setWasmPath } from "@tensorflow/tfjs-backend-wasm";
 import { PuzzleBox } from "../imageProcessing/extractBoxes";
 
+// `tfjs-backend-wasm@2.0.1` ships two paired wasm/js bundles: a plain one and
+// a SIMD one, each with a JS "glue" wrapper sized for its own binary's
+// WebAssembly.Table. `setWasmPath` (this version predates `setWasmPaths`) can
+// only point at one file, and only the plain `tfjs-backend-wasm.wasm` is
+// copied into `public/` (see the build/CI step that puts it there). Browsers
+// have broadened WASM SIMD support since this package was published, so a
+// modern browser's own feature detection now picks the SIMD glue, which then
+// fails to link against the non-SIMD binary we actually serve:
+//   LinkError: WebAssembly.instantiate(): table import 8 is smaller than
+//   initial 124, got 108
+// Force SIMD detection off so TFJS always loads the plain glue, matching the
+// only binary we ship.
+tf.env().set("WASM_HAS_SIMD_SUPPORT", false);
 setWasmPath(`${process.env.PUBLIC_URL}/tfjs-backend-wasm.wasm`);
 const MODEL_URL = `${process.env.PUBLIC_URL}/tfjs_model/model.json`;
 
